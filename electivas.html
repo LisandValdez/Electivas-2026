@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscripciones a Electivas — 2° Cuatrimestre 2026</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Baloo+Da+2:wght@400..800&display=swap');
+
+  :root{
+    --vivid-purple:#9b51e0;
+    --black:#000000;
+    --cyan-bluish-gray:#abb8c3;
+    --white:#ffffff;
+    --purple-deep:#6f2fb0;
+    --purple-tint:#f4ecfc;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    font-family:"Baloo 2", serif;
+    background:var(--white);
+    color:var(--black);
+    line-height:1.6;
+  }
+
+  h1,h2,h3,.eyebrow-free{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(155,81,224,0.35), transparent 45%),
+      linear-gradient(135deg, var(--black) 0%, #1a0f28 55%, var(--purple-deep) 130%);
+    color:var(--white);
+    padding:5.5rem 6vw 4rem;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-10%;
+    top:-30%;
+    width:60%;
+    height:160%;
+    background:conic-gradient(from 200deg, var(--vivid-purple), transparent 55%);
+    opacity:0.25;
+    filter:blur(40px);
+    pointer-events:none;
+  }
+
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.4rem);
+    margin:0 0 0.6rem;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    max-width:18ch;
+  }
+
+  .hero p.lead{
+    max-width:56ch;
+    font-size:1.15rem;
+    color:var(--cyan-bluish-gray);
+    margin:0;
+  }
+
+  .deadline-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    margin-top:2rem;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(171,184,195,0.4);
+    padding:0.6rem 1.1rem;
+    border-radius:999px;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:0.92rem;
+    color:var(--white);
+  }
+
+  .deadline-chip strong{ color:#e6d1ff; }
+
+  /* ---------- GENERAL INFO ---------- */
+  .info{
+    max-width:920px;
+    margin:0 auto;
+    padding:4rem 6vw 2rem;
+  }
+
+  .info h2{
+    font-size:1.7rem;
+    margin-bottom:1rem;
+    border-left:5px solid var(--vivid-purple);
+    padding-left:0.8rem;
+  }
+
+  .info p{
+    font-size:1.04rem;
+    color:#2a2a2a;
+  }
+
+  .tipo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.2rem;
+    margin:1.8rem 0 2.5rem;
+  }
+
+  .tipo-card{
+    border:1px solid var(--cyan-bluish-gray);
+    border-radius:10px;
+    padding:1.4rem 1.5rem;
+    background:var(--white);
+  }
+
+  .tipo-card h3{
+    margin:0 0 0.4rem;
+    font-size:1.1rem;
+    color:var(--purple-deep);
+  }
+
+  .tipo-card p{
+    margin:0;
+    font-size:0.98rem;
+    color:#3a3a3a;
+  }
+
+  table.horas{
+    width:100%;
+    border-collapse:collapse;
+    margin:1.5rem 0 2.5rem;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:0.93rem;
+  }
+
+  table.horas caption{
+    text-align:left;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    color:#555;
+    font-size:0.85rem;
+    margin-bottom:0.6rem;
+  }
+
+  table.horas th, table.horas td{
+    border:1px solid var(--cyan-bluish-gray);
+    padding:0.65rem 0.9rem;
+    text-align:left;
+  }
+
+  table.horas thead th{
+    background:var(--black);
+    color:var(--white);
+  }
+
+  table.horas tbody tr:nth-child(even){
+    background:var(--purple-tint);
+  }
+
+  /* ---------- LISTADO ---------- */
+  .listado{
+    max-width:1100px;
+    margin:0 auto;
+    padding:1rem 6vw 5rem;
+  }
+
+  .categoria{
+    margin-top:3.2rem;
+  }
+
+  .categoria > h2{
+    font-size:1.5rem;
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+    color:var(--black);
+  }
+
+  .categoria > h2 .dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--vivid-purple);
+    display:inline-block;
+  }
+
+  .carrera-block{
+    margin-top:1.6rem;
+  }
+
+  .carrera-block h3{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:1rem;
+    color:var(--white);
+    background:var(--purple-deep);
+    display:inline-block;
+    padding:0.35rem 0.9rem;
+    border-radius:6px;
+    margin-bottom:1rem;
+  }
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:1.3rem;
+  }
+
+  .card{
+    border:1px solid var(--cyan-bluish-gray);
+    border-radius:12px;
+    padding:1.5rem 1.5rem 1.4rem;
+    background:var(--white);
+    display:flex;
+    flex-direction:column;
+    gap:0.7rem;
+    position:relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:12px;
+    padding:1px;
+    background:linear-gradient(135deg, var(--vivid-purple), transparent 60%);
+    opacity:0;
+    transition:opacity 0.25s ease;
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+
+  .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 30px -14px rgba(155,81,224,0.45);
+    border-color:var(--vivid-purple);
+  }
+
+  .card:hover::before{
+    opacity:1;
+  }
+
+  .card h4{
+    margin:0;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:1.12rem;
+    color:var(--black);
+    line-height:1.35;
+  }
+
+  .card .meta{
+    font-size:0.9rem;
+    color:#555;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+  }
+
+  .card .meta b{ color:var(--purple-deep); }
+
+  .card a.form-link{
+    margin-top:auto;
+    align-self:flex-start;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:0.92rem;
+    font-weight:600;
+    color:var(--white);
+    background:var(--vivid-purple);
+    padding:0.55rem 1rem;
+    border-radius:7px;
+    text-decoration:none;
+    transition: background 0.25s ease, transform 0.2s ease;
+  }
+
+  .card a.form-link:hover{
+    background:var(--purple-deep);
+    transform:translateX(3px);
+  }
+
+  footer{
+    background:var(--black);
+    color:var(--cyan-bluish-gray);
+    text-align:center;
+    padding:2.2rem 1rem;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:0.88rem;
+  }
+
+  @media (max-width:640px){
+    .tipo-grid{ grid-template-columns:1fr; }
+    .hero{ padding:4rem 6vw 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Inscripciones a Electivas</h1>
+  <p class="lead">Segundo Cuatrimestre 2026 — Elegí las propuestas formativas que fortalecen, amplían y actualizan tu trayectoria académica.</p>
+  <div class="deadline-chip">📅 Inscripciones abiertas hasta el <strong>7 de septiembre</strong> inclusive</div>
+</header>
+
+<section class="info">
+  <h2>Información general</h2>
+  <p>Las <strong>Electivas</strong> son propuestas formativas que buscan fortalecer, ampliar y actualizar tu trayectoria académica, permitiéndote elegir experiencias de formación vinculadas con tus intereses y con las necesidades de tu carrera.</p>
+
+  <div class="tipo-grid">
+    <div class="tipo-card">
+      <h3>📚 Electivas generales</h3>
+      <p>Propuestas dirigidas a estudiantes de todas o varias carreras del Instituto.</p>
+    </div>
+    <div class="tipo-card">
+      <h3>🎓 Electivas específicas</h3>
+      <p>Propuestas vinculadas específicamente con la formación de cada carrera.</p>
+    </div>
+  </div>
+
+  <p>Los diseños curriculares establecen como requisito obligatorio la acreditación de una carga horaria total de Electivas en cada profesorado, tanto para Electivas Generales como para Electivas Específicas. Esta carga se completa progresivamente cursando y acreditando Electivas desde segundo hasta cuarto año de la carrera.</p>
+
+  <table class="horas">
+    <caption>Carga horaria a acreditar por profesorado</caption>
+    <thead>
+      <tr>
+        <th>Profesorado</th>
+        <th>Electivas generales</th>
+        <th>Electivas específicas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Educación Primaria</td><td>48 hs</td><td>48 hs</td></tr>
+      <tr><td>Educación Inicial</td><td>48 hs</td><td>48 hs</td></tr>
+      <tr><td>Lengua y Literatura</td><td>32 hs</td><td>128 hs</td></tr>
+      <tr><td>Inglés</td><td>32 hs</td><td>24 hs</td></tr>
+      <tr><td>Artes Visuales</td><td>—</td><td>32 hs</td></tr>
+    </tbody>
+  </table>
+
+  <p>En cada uno de los formularios encontrarás información sobre el nombre de la propuesta, la carga horaria total en horas cátedra, las carreras y estudiantes a quienes está dirigida, y los horarios posibles de dictado (a confirmar). Te recomendamos revisar las propuestas disponibles y elegir aquellas que resulten de mayor interés para tu trayectoria formativa.</p>
+</section>
+
+<section class="listado">
+
+  <div class="categoria">
+    <h2><span class="dot"></span>Electivas generales</h2>
+    <div class="cards">
+      <div class="card">
+        <h4>Gestión situada de la autoridad pedagógica, los conflictos y la convivencia</h4>
+        <div class="meta"><b>Dirigida a:</b> todas las carreras del Instituto</div>
+        <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeXQcu9vLyUhSS1CSSMZ6dI0zUZNOxgkgH3vNJhQNcEqVDBnw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="categoria">
+    <h2><span class="dot"></span>Electivas específicas</h2>
+
+    <div class="carrera-block">
+      <h3>Profesorado de Educación Primaria</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Lengua y Aprendizaje escolar</h4>
+          <div class="meta"><b>Carrera:</b> Educación Primaria</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeoQczmjA3U3l8uvJGDQNLwxEcTMogptkQ_NwLKs7hjN2Trug/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+        <div class="card">
+          <h4>Poesía feroz — Leer poesía en Nivel Inicial y Primer Ciclo</h4>
+          <div class="meta"><b>Carrera:</b> Educación Primaria</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSe0dQgfjOTFAoz3Dc4Hc-5hqsYDmnJg-um9FLiZxO7pYyVYDw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+        <div class="card">
+          <h4>El laboratorio escolar de Ciencias Naturales como espacio pedagógico</h4>
+          <div class="meta"><b>Carrera:</b> Educación Primaria</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSf-nUuWLkfqc-tQeIm-PTvITD5nbwKiensUjLL8E9AnC5NEEw/viewform?usp=publish-editor" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+        <div class="card">
+          <h4>Ser Docente: saber, actuar y registrar</h4>
+          <div class="meta"><b>Carrera:</b> Educación Primaria</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeUfjXii5oKEZ7LPIfRFmwBeBATsMz2WfjEvHRCz2E2tfYbDA/viewform?usp=publish-editor" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carrera-block">
+      <h3>Profesorado de Educación Inicial</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Poesía feroz — Leer poesía en Nivel Inicial y Primer Ciclo</h4>
+          <div class="meta"><b>Carrera:</b> Educación Inicial</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSe0dQgfjOTFAoz3Dc4Hc-5hqsYDmnJg-um9FLiZxO7pYyVYDw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+        <div class="card">
+          <h4>Cuentos en do, re, mi + IA</h4>
+          <div class="meta"><b>Carrera:</b> Educación Inicial</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOqu1iHG5FTgBbq2mgHjuuIGVzfYw3Rdqs0P8EBaJn1b0oQ/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carrera-block">
+      <h3>Profesorado de Lengua y Literatura</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Lengua y Aprendizaje escolar</h4>
+          <div class="meta"><b>Carrera:</b> Lengua y Literatura</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeoQczmjA3U3l8uvJGDQNLwxEcTMogptkQ_NwLKs7hjN2Trug/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carrera-block">
+      <h3>Profesorado de Inglés</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Tiny Worlds — poetry, flash fiction and creative writing</h4>
+          <div class="meta"><b>Carrera:</b> Inglés</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdq17qTzUudQmdhd3FFjcXb9AGKG7sVQ_uMK0_f1xsl2MT6cw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carrera-block">
+      <h3>Profesorado de Artes Visuales</h3>
+      <div class="cards">
+        <div class="card">
+          <h4>Video Arte como herramienta pedagógica</h4>
+          <div class="meta"><b>Carrera:</b> Artes Visuales</div>
+          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSce-AjsOolELxAbpCjUGmNclXWYROrn5qt_fiQyJroOQ_hc3g/viewform?usp=publish-editor" target="_blank" rel="noopener">Ir al formulario →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Instituto — Inscripciones a Electivas · Segundo Cuatrimestre 2026
+</footer>
+
+</body>
+</html>
