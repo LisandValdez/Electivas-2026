@@ -21,40 +21,49 @@
 
   html{scroll-behavior:smooth;}
 
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .animate-on-scroll{opacity:1 !important; transform:none !important; transition:none !important;}
+  }
+
   body{
     margin:0;
     font-family:"Baloo 2", serif;
-    background:var(--white);
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(155,81,224,0.08), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(111,47,176,0.06), transparent 60%),
+      radial-gradient(ellipse 50% 30% at 0% 100%, rgba(155,81,224,0.05), transparent 55%),
+      var(--white);
+    background-attachment:fixed;
     color:var(--black);
     line-height:1.6;
   }
 
+  .animate-on-scroll{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .animate-on-scroll.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
   h1,h2,h3,.eyebrow-free{
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
   }
 
   /* ---------- HERO ---------- */
   .hero{
-    background:
-      radial-gradient(circle at 15% 20%, rgba(155,81,224,0.35), transparent 45%),
-      linear-gradient(135deg, var(--black) 0%, #1a0f28 55%, var(--purple-deep) 130%);
+    background:#652C8A;
     color:var(--white);
-    padding:5.5rem 6vw 4rem;
-    position:relative;
-    overflow:hidden;
+    padding:4rem 6vw 2rem;
   }
 
-  .hero::after{
-    content:"";
-    position:absolute;
-    right:-10%;
-    top:-30%;
-    width:60%;
-    height:160%;
-    background:conic-gradient(from 200deg, var(--vivid-purple), transparent 55%);
-    opacity:0.25;
-    filter:blur(40px);
-    pointer-events:none;
+  .hero-inner{
+    max-width:920px;
+    margin:0 auto;
   }
 
   .hero h1{
@@ -81,12 +90,19 @@
     border:1px solid rgba(171,184,195,0.4);
     padding:0.6rem 1.1rem;
     border-radius:999px;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     font-size:0.92rem;
     color:var(--white);
   }
 
   .deadline-chip strong{ color:#e6d1ff; }
+
+  .hero-logo{
+    width:auto;
+    height:100px;
+    object-fit:contain;
+    margin-bottom:1rem;
+  }
 
   /* ---------- GENERAL INFO ---------- */
   .info{
@@ -137,13 +153,13 @@
     width:100%;
     border-collapse:collapse;
     margin:1.5rem 0 2.5rem;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     font-size:0.93rem;
   }
 
   table.horas caption{
     text-align:left;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     color:#555;
     font-size:0.85rem;
     margin-bottom:0.6rem;
@@ -173,6 +189,14 @@
 
   .categoria{
     margin-top:3.2rem;
+    padding-top:3.2rem;
+    border-top:1px solid var(--cyan-bluish-gray);
+  }
+
+  .categoria:first-child{
+    margin-top:0;
+    padding-top:0;
+    border-top:none;
   }
 
   .categoria > h2{
@@ -196,17 +220,50 @@
   }
 
   .carrera-block h3{
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     font-size:1rem;
     color:var(--white);
     background:var(--purple-deep);
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
     padding:0.35rem 0.9rem;
     border-radius:6px;
     margin-bottom:1rem;
+    cursor:pointer;
+    user-select:none;
+    transition:background 0.2s ease;
   }
 
-  .cards{
+  .carrera-block h3:hover{
+    background:#5a2490;
+  }
+
+  .carrera-block h3::after{
+    content:"";
+    width:8px;
+    height:8px;
+    border-right:2px solid var(--white);
+    border-bottom:2px solid var(--white);
+    transform:rotate(45deg);
+    transition:transform 0.3s ease;
+    margin-left:0.25rem;
+  }
+
+  .carrera-block.open h3::after{
+    transform:rotate(-135deg);
+  }
+
+  .carrera-block .cards{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+  }
+
+  .carrera-block.open .cards{
+    max-height:2000px;
+    opacity:1;
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
     gap:1.3rem;
@@ -235,6 +292,9 @@
     transition:opacity 0.25s ease;
     -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite:xor;
+    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite:exclude;
+    -webkit-mask-composite:xor;
     mask-composite:exclude;
     pointer-events:none;
   }
@@ -251,7 +311,7 @@
 
   .card h4{
     margin:0;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     font-size:1.12rem;
     color:var(--black);
     line-height:1.35;
@@ -260,7 +320,7 @@
   .card .meta{
     font-size:0.9rem;
     color:#555;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
   }
 
   .card .meta b{ color:var(--purple-deep); }
@@ -268,7 +328,7 @@
   .card a.form-link{
     margin-top:auto;
     align-self:flex-start;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     font-size:0.92rem;
     font-weight:600;
     color:var(--white);
@@ -289,22 +349,85 @@
     color:var(--cyan-bluish-gray);
     text-align:center;
     padding:2.2rem 1rem;
-    font-family:"Helvetica Neue",Arial,sans-serif;
+    font-family:"Baloo 2",Arial,sans-serif;
     font-size:0.88rem;
+  }
+
+  @media (max-width:1024px){
+    .hero h1{ max-width:22ch; }
+    .cards{ grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); }
+  }
+
+  @media (max-width:768px){
+    .hero{ padding:4rem 5vw 3rem; }
+    .hero h1{ font-size:clamp(2rem, 6vw, 2.8rem); }
+    .hero p.lead{ font-size:1.05rem; }
+    .hero-logo{ height:80px; }
+    .info{ padding:3.5rem 5vw 1.5rem; }
+    .info h2{ font-size:1.5rem; }
+    .tipo-grid{ gap:1rem; }
+    .tipo-card{ padding:1.2rem 1.3rem; }
+    .listado{ padding:0.5rem 5vw 4rem; }
+    .categoria{ margin-top:2.8rem; padding-top:2.8rem; }
+    .categoria > h2{ font-size:1.35rem; }
+    .carrera-block h3{ font-size:0.95rem; padding:0.3rem 0.8rem; }
+    .cards{ gap:1.1rem; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); }
+    .card{ padding:1.3rem 1.3rem 1.2rem; }
+    .card h4{ font-size:1.05rem; }
+    .card .meta{ font-size:0.85rem; }
+    .card a.form-link{ font-size:0.88rem; padding:0.5rem 0.9rem; }
+    table.horas{ font-size:0.88rem; }
+    table.horas th, table.horas td{ padding:0.55rem 0.7rem; }
   }
 
   @media (max-width:640px){
     .tipo-grid{ grid-template-columns:1fr; }
-    .hero{ padding:4rem 6vw 3rem; }
+    .hero{ padding:3.5rem 5vw 2.5rem; }
+    .hero-logo{ height:64px; margin-bottom:0.75rem; }
+    .hero h1{ max-width:none; text-align:center; }
+    .hero p.lead{ max-width:none; text-align:center; }
+    .deadline-chip{
+      margin-left:auto;
+      margin-right:auto;
+      text-align:center;
+      justify-content:center;
+      font-size:0.8rem;
+      padding:0.5rem 1rem;
+      flex-wrap:nowrap;
+      white-space:nowrap;
+    }
+    .info{ padding:3rem 4vw 1rem; }
+    .info h2{ font-size:1.35rem; padding-left:0.6rem; border-left-width:4px; }
+    .info p{ font-size:1rem; }
+    .tipo-card{ padding:1.1rem 1.2rem; }
+    .tipo-card h3{ font-size:1rem; }
+    .tipo-card p{ font-size:0.93rem; }
+    .listado{ padding:0 4vw 3.5rem; }
+    .categoria{ margin-top:2.5rem; padding-top:2.5rem; }
+    .categoria > h2{ font-size:1.2rem; gap:0.5rem; }
+    .categoria > h2 .dot{ width:8px; height:8px; }
+    .carrera-block h3{ font-size:0.9rem; padding:0.25rem 0.7rem; }
+    .cards{ grid-template-columns:1fr; gap:1rem; }
+    .card{ padding:1.2rem 1.2rem 1.1rem; }
+    .card h4{ font-size:1rem; }
+    .card .meta{ font-size:0.82rem; }
+    .card a.form-link{ font-size:0.85rem; padding:0.5rem 0.85rem; width:100%; text-align:center; }
+    table.horas{ display:block; width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    table.horas caption{ font-size:0.8rem; }
+    table.horas th, table.horas td{ padding:0.5rem 0.6rem; font-size:0.82rem; white-space:nowrap; }
+    footer{ padding:1.8rem 1rem; font-size:0.82rem; }
   }
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <h1>Inscripciones a Electivas</h1>
-  <p class="lead">Segundo Cuatrimestre 2026 — Elegí las propuestas formativas que fortalecen, amplían y actualizan tu trayectoria académica.</p>
-  <div class="deadline-chip">📅 Inscripciones abiertas hasta el <strong>7 de septiembre</strong> inclusive</div>
+  <div class="hero-inner">
+    <img src="logo-final.jpg" alt="" class="hero-logo" aria-hidden="true">
+    <h1>Inscripciones a Electivas</h1>
+    <p class="lead">Segundo Cuatrimestre 2026 — Elegí las propuestas formativas que fortalecen, amplían y actualizan tu trayectoria académica.</p>
+    <div class="deadline-chip">📅 Inscripciones abiertas hasta el <strong>7 de septiembre</strong> inclusive</div>
+  </div>
 </header>
 
 <section class="info">
@@ -312,11 +435,11 @@
   <p>Las <strong>Electivas</strong> son propuestas formativas que buscan fortalecer, ampliar y actualizar tu trayectoria académica, permitiéndote elegir experiencias de formación vinculadas con tus intereses y con las necesidades de tu carrera.</p>
 
   <div class="tipo-grid">
-    <div class="tipo-card">
+    <div class="tipo-card animate-on-scroll">
       <h3>📚 Electivas generales</h3>
       <p>Propuestas dirigidas a estudiantes de todas o varias carreras del Instituto.</p>
     </div>
-    <div class="tipo-card">
+    <div class="tipo-card animate-on-scroll">
       <h3>🎓 Electivas específicas</h3>
       <p>Propuestas vinculadas específicamente con la formación de cada carrera.</p>
     </div>
@@ -348,9 +471,9 @@
 <section class="listado">
 
   <div class="categoria">
-    <h2><span class="dot"></span>Electivas generales</h2>
+    <h2 class="animate-on-scroll"><span class="dot"></span>Electivas generales</h2>
     <div class="cards">
-      <div class="card">
+      <div class="card animate-on-scroll">
         <h4>Gestión situada de la autoridad pedagógica, los conflictos y la convivencia</h4>
         <div class="meta"><b>Dirigida a:</b> todas las carreras del Instituto</div>
         <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeXQcu9vLyUhSS1CSSMZ6dI0zUZNOxgkgH3vNJhQNcEqVDBnw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
@@ -359,27 +482,22 @@
   </div>
 
   <div class="categoria">
-    <h2><span class="dot"></span>Electivas específicas</h2>
+    <h2 class="animate-on-scroll"><span class="dot"></span>Electivas específicas</h2>
 
     <div class="carrera-block">
       <h3>Profesorado de Educación Primaria</h3>
       <div class="cards">
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>Lengua y Aprendizaje escolar</h4>
           <div class="meta"><b>Carrera:</b> Educación Primaria</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeoQczmjA3U3l8uvJGDQNLwxEcTMogptkQ_NwLKs7hjN2Trug/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
         </div>
-        <div class="card">
-          <h4>Poesía feroz — Leer poesía en Nivel Inicial y Primer Ciclo</h4>
-          <div class="meta"><b>Carrera:</b> Educación Primaria</div>
-          <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSe0dQgfjOTFAoz3Dc4Hc-5hqsYDmnJg-um9FLiZxO7pYyVYDw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
-        </div>
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>El laboratorio escolar de Ciencias Naturales como espacio pedagógico</h4>
           <div class="meta"><b>Carrera:</b> Educación Primaria</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSf-nUuWLkfqc-tQeIm-PTvITD5nbwKiensUjLL8E9AnC5NEEw/viewform?usp=publish-editor" target="_blank" rel="noopener">Ir al formulario →</a>
         </div>
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>Ser Docente: saber, actuar y registrar</h4>
           <div class="meta"><b>Carrera:</b> Educación Primaria</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeUfjXii5oKEZ7LPIfRFmwBeBATsMz2WfjEvHRCz2E2tfYbDA/viewform?usp=publish-editor" target="_blank" rel="noopener">Ir al formulario →</a>
@@ -390,12 +508,12 @@
     <div class="carrera-block">
       <h3>Profesorado de Educación Inicial</h3>
       <div class="cards">
-        <div class="card">
-          <h4>Poesía feroz — Leer poesía en Nivel Inicial y Primer Ciclo</h4>
+        <div class="card animate-on-scroll">
+          <h4>Poesía feroz — Leer poesía en Nivel Inicial</h4>
           <div class="meta"><b>Carrera:</b> Educación Inicial</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSe0dQgfjOTFAoz3Dc4Hc-5hqsYDmnJg-um9FLiZxO7pYyVYDw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
         </div>
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>Cuentos en do, re, mi + IA</h4>
           <div class="meta"><b>Carrera:</b> Educación Inicial</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOqu1iHG5FTgBbq2mgHjuuIGVzfYw3Rdqs0P8EBaJn1b0oQ/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
@@ -406,7 +524,7 @@
     <div class="carrera-block">
       <h3>Profesorado de Lengua y Literatura</h3>
       <div class="cards">
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>Lengua y Aprendizaje escolar</h4>
           <div class="meta"><b>Carrera:</b> Lengua y Literatura</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeoQczmjA3U3l8uvJGDQNLwxEcTMogptkQ_NwLKs7hjN2Trug/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
@@ -417,7 +535,7 @@
     <div class="carrera-block">
       <h3>Profesorado de Inglés</h3>
       <div class="cards">
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>Tiny Worlds — poetry, flash fiction and creative writing</h4>
           <div class="meta"><b>Carrera:</b> Inglés</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdq17qTzUudQmdhd3FFjcXb9AGKG7sVQ_uMK0_f1xsl2MT6cw/viewform?usp=header" target="_blank" rel="noopener">Ir al formulario →</a>
@@ -428,7 +546,7 @@
     <div class="carrera-block">
       <h3>Profesorado de Artes Visuales</h3>
       <div class="cards">
-        <div class="card">
+        <div class="card animate-on-scroll">
           <h4>Video Arte como herramienta pedagógica</h4>
           <div class="meta"><b>Carrera:</b> Artes Visuales</div>
           <a class="form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSce-AjsOolELxAbpCjUGmNclXWYROrn5qt_fiQyJroOQ_hc3g/viewform?usp=publish-editor" target="_blank" rel="noopener">Ir al formulario →</a>
@@ -440,8 +558,33 @@
 </section>
 
 <footer>
-  Instituto — Inscripciones a Electivas · Segundo Cuatrimestre 2026
+  IES 9-010 Rosario Vera Peñaloza — Inscripciones a Electivas · Segundo Cuatrimestre 2026
 </footer>
 
+<script>
+(function(){
+  // Scroll animations
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {rootMargin:'0px 0px -60px 0px', threshold:0.1});
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  }
+
+  // Accordion functionality for carrera blocks
+  document.querySelectorAll('.carrera-block h3').forEach(h3 => {
+    h3.addEventListener('click', function(){
+      const block = this.closest('.carrera-block');
+      block.classList.toggle('open');
+    });
+  });
+})();
+</script>
 </body>
 </html>
